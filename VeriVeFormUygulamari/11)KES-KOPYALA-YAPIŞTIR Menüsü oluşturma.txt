@@ -1,0 +1,127 @@
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+namespace ornek2
+{
+ public partial class Form1 : Form
+ {
+ public Form1()
+ {
+ InitializeComponent();
+ }
+ private void kırmızıToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ richTextBox1.ForeColor = Color.Red;
+ }
+ private void maviToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ richTextBox1.ForeColor = Color.Blue;
+ }
+ private void yeşilToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ richTextBox1.ForeColor = Color.Green;
+ }
+ private void siyahToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ richTextBox1.ForeColor = Color.Black;
+ }
+ private void timesRomanToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ float boyut=richTextBox1.Font.Size;
+ richTextBox1.Font = new Font("Times New Roman",boyut);
+ }
+ private void arialToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ float boyut = richTextBox1.Font.Size;
+ richTextBox1.Font = new Font("Arial", boyut);
+ }
+ private void comicsToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ float boyut = richTextBox1.Font.Size;
+ richTextBox1.Font = new Font("Comic Sans MS", boyut);
+ }
+ private void verdanaToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ float boyut = richTextBox1.Font.Size;
+ richTextBox1.Font = new Font("Verdana", boyut);
+ }
+ void boyutDegistir(int boyut)
+ {
+ FontFamily tip = richTextBox1.Font.FontFamily;
+ richTextBox1.Font = new Font(tip, boyut);
+ }
+ private void toolStripMenuItem2_Click(object sender, EventArgs e)
+ {
+ boyutDegistir(10);
+ }
+ private void toolStripMenuItem3_Click(object sender, EventArgs e)
+ {
+ boyutDegistir(12);
+ }
+ private void toolStripMenuItem4_Click(object sender, EventArgs e)
+ {
+ boyutDegistir(14);
+ }
+ private void toolStripMenuItem5_Click(object sender, EventArgs e)
+ {
+ boyutDegistir(16);
+ }
+ private void toolStripMenuItem6_Click(object sender, EventArgs e)
+ {
+ boyutDegistir(20);
+ }
+ private void toolStripMenuItem7_Click(object sender, EventArgs e)
+ {
+ boyutDegistir(30);
+ }
+ private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ FontFamily tip = richTextBox1.Font.FontFamily;
+ float boyut = richTextBox1.Font.Size;
+ richTextBox1.Font = new Font(tip,boyut,FontStyle.Regular);
+ }
+ private void italikToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ FontFamily tip = richTextBox1.Font.FontFamily;
+ float boyut = richTextBox1.Font.Size;
+ richTextBox1.Font = new Font(tip, boyut, FontStyle.Italic);
+ }
+ private void kalınToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ FontFamily tip = richTextBox1.Font.FontFamily;
+ float boyut = richTextBox1.Font.Size;
+ richTextBox1.Font = new Font(tip, boyut, FontStyle.Bold);
+ }
+ private void kalınİtalikToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ FontFamily tip = richTextBox1.Font.FontFamily;
+ float boyut = richTextBox1.Font.Size;
+ richTextBox1.Font = new Font(tip, boyut, FontStyle.Bold | 
+FontStyle.Italic);
+ }
+ private void çIKIŞToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ Application.Exit();
+ }
+ private void çIKIŞToolStripMenuItem1_Click(object sender, EventArgs e)
+ {
+ Application.Exit();
+ }
+ private void kopyalaToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ richTextBox1.Copy();
+ }
+ private void yapıştırToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ richTextBox1.Paste();
+ }
+ private void kesToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ richTextBox1.Cut();
+ }
+ private void toolStripButton1_Click(object sender, EventArgs e)
+ {
+ richTextBox1.Cut();
+ }
+ }
+ }

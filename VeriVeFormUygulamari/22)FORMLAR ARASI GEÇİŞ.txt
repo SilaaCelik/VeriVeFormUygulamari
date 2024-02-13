@@ -1,0 +1,73 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+														FORM
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1.ADIM:		Menülerden PROJE bölümünden FORM EKLE ye basıp yeni form açma.
+
+2.ADIM		“Add New Item” penceresinden Windows Form ögesi seçme.
+
+3.ADIM		Projeye yeni bir Form ekleme işlemi:	Form2 yeniForm = new Form2();
+							Bir formun çalışma anında gizlenmesi gerekirse “this.Hide();” metodu kullanılabilir.
+													------------
+4.ADIM		Yeni oluşturulan formların gösterilmesi, formun Show ve ShowDialog metotlarıyla sağlanır.
+		Form2 yeniForm = new Form2();		Form2 yeniForm = new Form2();
+		yeniForm.Show();			yeniForm.ShowDialog();
+
+Form2‘yi açtığımız anda ana formu seçilemez hâle getirmek için this.Enabled = false; komutu kullanılabilir.
+							       ---------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace formGecisi
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        public string adi = "SILA";
+        public string sifre = "0000";
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string id = textBox1.Text;
+            string pass = textBox2.Text;
+            if (id == adi && pass == sifre)
+            {
+                Form2 yeniForm = new Form2();
+                yeniForm.ShowDialog();
+            }
+            else
+            {
+                Console.WriteLine("GİRDİĞİNİZ ŞİFRE YANLIŞ LÜTFEN TEKRAR KONTROL EDİNİZ!");
+                textBox1.Clear();
+                textBox2.Clear();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Application.Exit(); //Form1 üzerindeki Çıkış butonuna çift tıklanarak açılan Kod alanına aşağıdaki kodları yazılmalıdır.
+
+	    //this.Close();
+	    //Form2 üzerindeki Çıkış butonuna çift tıklanarak açılan Kod alanına aşağıdaki kodları yazılmalıdır
+        }
+    }
+}
+
+
+    

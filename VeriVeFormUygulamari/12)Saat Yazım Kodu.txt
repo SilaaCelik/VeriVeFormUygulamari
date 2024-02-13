@@ -1,0 +1,196 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Microsoft.VisualBasic.PowerPacks;
+
+namespace sila
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        //****** KULLANILAN ŞABLON VE ŞEKİL TANITIMI ******//
+        ShapeContainer tuval = new ShapeContainer();
+        OvalShape cember = new OvalShape();
+        OvalShape merkez = new OvalShape();
+        LineShape[] sdCizgisi = new LineShape[60];
+        Label[] etiket = new Label[12];
+        LineShape[] saatcizgisi = new LineShape[12];
+        LineShape saniyeCizgisi = new LineShape();
+        LineShape dakikaCizgisi = new LineShape();
+        LineShape snCizgisi = new LineShape();
+        //************************************************//
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+            //*****1.ÇEMBER ÇİZME******//
+            cember.Parent = tuval;
+            tuval.Parent = this;
+            //cember nesnesi, tuval nesnesinin içinde bulunan bir grafik nesnesi olacaktır.
+            cember.Name = "cember1";
+            cember.Width = 400;
+            cember.Height = 400;
+            cember.Left = 20;
+            cember.Top = 20;
+            cember.BorderWidth = 3;
+            //***********************/
+
+
+            //********* 2.MERKEZ'e NOKTA ÇİZME ***********//
+            merkez.Parent = tuval;
+            tuval.Parent = this;
+            //merkez nesnesi, tuval nesnesinin içinde bulunan bir grafik nesnesi olacaktır.
+            merkez.Name = "merkez1";
+            merkez.Width = 20;
+            merkez.Height = 20;
+            merkez.Left = 210;
+            merkez.Top = 210;
+            merkez.BackColor = Color.Black;
+            //**********************************//
+
+
+            //******************3.DAKİKA ÇİZGİLERİ YAZDIRMA******************//
+            for (int i = 0; i < 60; i++)
+            {
+                sdCizgisi[i] = new LineShape();
+                sdCizgisi[i].Name = "dakika1" + i;
+                sdCizgisi[i].BorderWidth = 1;
+                double aci = i * 6 * Math.PI / 180;
+                sdCizgisi[i].X1 = Convert.ToInt32(220 - 200 * Math.Cos(aci));
+                sdCizgisi[i].Y1 = Convert.ToInt32(220 - 200 * Math.Sin(aci));
+                sdCizgisi[i].X2 = Convert.ToInt32(220 - 190 * Math.Cos(aci));
+                sdCizgisi[i].Y2 = Convert.ToInt32(220 - 190 * Math.Sin(aci));
+                sdCizgisi[i].Parent = tuval;
+            }
+
+            //*************************************************************//
+
+
+            //*********** 4.DAKİKA ÇUBUĞU YAZDIRMA**********//           
+            dakikaCizgisi.BorderWidth = 5;
+            dakikaCizgisi.BorderColor = Color.Blue;
+            dakikaCizgisi.Parent = tuval;
+            dakikaCizgisi.X1 = 220;
+            dakikaCizgisi.Y1 = 220;
+            dakikaCizgisi.X2 = 220;
+            dakikaCizgisi.Y2 = 220;
+            this.Width = 450; this.Height = 500;
+            //********************************************//
+
+
+            //********** 5.ÇEMBER İÇİNE 12 Ana DAKİKA ÇİZGİ ATMA SÖZ YAZIMI ************//
+            for (int i = 0; i < 12; i++)
+            {
+                saatcizgisi[i] = new LineShape();
+                saatcizgisi[i].Name = "sayilar1" + i;
+                if (i % 3 == 0)
+                    saatcizgisi[i].BorderWidth = 5;
+
+                else
+                    saatcizgisi[i].BorderWidth = 3;
+
+
+
+                double aci = i * 30 * Math.PI / 180;
+                saatcizgisi[i].X1 = Convert.ToInt32(220 - 200 * Math.Cos(aci));
+                saatcizgisi[i].Y1 = Convert.ToInt32(220 - 200 * Math.Sin(aci));
+                saatcizgisi[i].X2 = Convert.ToInt32(220 - 170 * Math.Cos(aci));
+                saatcizgisi[i].Y2 = Convert.ToInt32(220 - 170 * Math.Sin(aci));
+
+                saatcizgisi[i].Parent = tuval;
+            }
+            //***************************************************************************//
+
+
+            //***************** 6.SAATİ 1'DEN 12'YE YAZDIRMA *******************//
+            for (int i = 0; i < 12; i++)
+            {
+                etiket[i] = new Label();
+                etiket[i].Name = "etiket1" + i;
+                etiket[i].Font = new Font("", 20);
+                etiket[i].TextAlign = ContentAlignment.MiddleCenter;
+                etiket[i].Width = 45;
+                etiket[i].Height = 27;
+                etiket[i].Text = (i + 1).ToString();
+                double aci = (i * 30 + 120) * Math.PI / 180;
+                etiket[i].Left = Convert.ToInt32(220 - 145 * Math.Cos(aci)) - etiket[i].Width / 2;
+                etiket[i].Top = Convert.ToInt32(220 - 145 * Math.Sin(aci)) - etiket[i].Height / 2;
+                this.Controls.Add(etiket[i]);
+            }
+            timer1.Start();
+            //*****************************************************************//
+
+
+
+            //*********** 7.Saniye Çubuğu Yazdırma ***********//
+            saniyeCizgisi.Name = "saniye1";
+            saniyeCizgisi.BorderWidth = 3;
+            saniyeCizgisi.BorderColor = Color.Red;
+            saniyeCizgisi.Parent = tuval;
+            saniyeCizgisi.X1 = 220;
+            saniyeCizgisi.Y1 = 220;
+            saniyeCizgisi.X2 = 220;
+            saniyeCizgisi.Y2 = 220;
+            //************************************************//
+
+
+            //*************** 8.Saati Belirten Kalın Siyah Çizgi ********************//
+            snCizgisi.Name = "saat";
+            snCizgisi.BorderWidth = 10;
+            snCizgisi.BorderColor = Color.Black;
+            snCizgisi.Parent = tuval;
+            snCizgisi.X1 = 220;
+            snCizgisi.Y1 = 220;
+            snCizgisi.X2 = 220;
+            snCizgisi.Y2 = 220;
+            //**********************************************************************//
+
+        } //FORM1 YAZILIMI BİTER
+
+ 
+        
+            //************************************** 9.Zaman ilerledikçe çizgi ilerler. ************************************************//
+            private void timer1_Tick(object sender, EventArgs e)
+            {
+                int saat = DateTime.Now.Hour;        //Güncel saati alır.
+                int dakika = DateTime.Now.Minute;    //Güncel dakikayı alır.
+                int saniye = DateTime.Now.Second;    //Güncel saniyeyi alır.
+
+                //SANİYE
+                double aci = (270 + saniye * 6) * Math.PI / 180; //Saniyenin açısı hesaplanır ve saniyeCizgisinin konumu belirlenir.
+                saniyeCizgisi.X1 = Convert.ToInt32(220 + 130 * Math.Cos(aci));
+                saniyeCizgisi.Y1 = Convert.ToInt32(220 + 130 * Math.Sin(aci));
+
+                //DAKİKA
+                aci = (270 + dakika * 6 + 0.1 * saniye) * Math.PI / 180; //Dakikanın açısı hesaplanır ve dakikaCizgisinin konumu belirlenir.
+                dakikaCizgisi.X1 = Convert.ToInt32(220 + 130 * Math.Cos(aci));
+                dakikaCizgisi.Y1 = Convert.ToInt32(220 + 130 * Math.Sin(aci));
+
+                //SAAT
+                aci = (270 + saat * 30 + 0.5 * dakika + (0.5 / 60) * saniye) * Math.PI / 180;
+                //Saatin açısı hesaplanır ve snCizgisinin konumu belirlenir.
+                snCizgisi.X1 = Convert.ToInt32(220 + 100 * Math.Cos(aci));
+                snCizgisi.Y1 = Convert.ToInt32(220 + 100 * Math.Sin(aci));
+            }
+            //****************************************************************************************************************************//
+
+        }
+
+
+
+    }
+
+
+
+
+

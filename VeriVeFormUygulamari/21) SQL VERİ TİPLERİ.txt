@@ -1,0 +1,25 @@
+COLUMN NAME		DATA TYPE		ÖZELLİĞİ
+KİTAP ID		int
+KİTAP ADI		nvarchar(50)		en fazla ellilik yer kaplıycak ama kitap 17 harflikse 17lik yer kaplıycak elli değil.
+YAZAR			nvarchar(50)
+YAYIN EVİ		nvarchar(50)
+FİYAT			money
+
+			bighit			8 bytelık tam sayılar için
+			binary 			ikili değer (true-false)
+			bit			ikili deper (evli-bekar , kız-erkek)
+			*char			karakter için kullanılır
+			*char(10)		10 karakterlik yazı tutar.
+
+			date			gün ay yıl tarihi tutar
+			date time		gün ay yıl saat dakikayı tutar
+			date time 		gün ay yıl saat dakika saniyeyi tutar.
+ 			date time ofset		ülkelere göre değişen zaman farki
+			decimal			ondalıklı değerleri tutar.
+			float			ondalıklı sayı
+			hierarchi		katigorileşme
+			*int			sayısal ifadelerde + - sayılar 4 milyar a kadar kullanılır 
+			*money			922milyar + - değer paralarını tutar.
+			*nchar			latin alfabeleri dışındakı alfabeleride destekler harfler.
+			*ntext			latin alfabeleri dışındakı alfabeleride destekler textler.
+			*nvarchar		kullanılmayan boşlukları fazladan depoda meşkul etmemesi için kullanılır.

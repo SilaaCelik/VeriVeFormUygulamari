@@ -1,0 +1,238 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data;
+using System.Data.SqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+namespace deneme
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        SqlConnection bag = new SqlConnection("server=SILA; Database=13012024vt; Integrated Security = true");
+        
+        private void tumunuGetir_Click(object sender, EventArgs e)
+        {
+            //SqlConnection bag = new SqlConnection("server=SILA; Database=13012024vt; Integrated Security = true");
+            try
+            {
+                SqlCommand komut = new SqlCommand("SELECT * FROM KAYIT", bag);
+                SqlDataAdapter adapter = new SqlDataAdapter(komut);
+                DataTable tablo = new DataTable();
+                adapter.Fill(tablo);
+                dataGridView1.DataSource = tablo;
+            }
+            catch
+            (Exception hata)
+            {
+                if (bag.State == ConnectionState.Open) bag.Close();
+                MessageBox.Show(hata.Message);
+            }
+            
+
+        }
+
+        private void ara_Click(object sender, EventArgs e)
+        {
+            try
+            {
+        using (SqlCommand komut = new SqlCommand())
+            {
+            string sorgu = "SELECT * FROM KAYIT WHERE 1=1"; // 1=1, WHERE koşulu için başlangıç
+
+                    // TextBox'lardaki değerlere göre sorgu oluşturma
+            if (textBox1.Text != "")
+            //if (!string.IsNullOrEmpty(textBox1.Text)) yazılımı doğru ve uzun olan versiyonudur.
+            {
+                sorgu += " AND NUMARA = @num";
+                komut.Parameters.AddWithValue("@num", textBox1.Text);
+            }
+
+             if (textBox2.Text != "")
+            {
+                sorgu += " AND AD = @ad";
+                komut.Parameters.AddWithValue("@ad", textBox2.Text);
+            }
+
+            if (textBox3.Text != "")
+            {
+                sorgu += " AND SOYAD = @soyad";
+                komut.Parameters.AddWithValue("@soyad", textBox3.Text);
+            }
+
+            if (textBox4.Text != "")
+            {
+                sorgu += " AND ADRES = @adres";
+                komut.Parameters.AddWithValue("@adres", textBox4.Text);
+            }
+
+            if (textBox5.Text != "")
+            {
+                sorgu += " AND MAAS = @maas";
+                komut.Parameters.AddWithValue("@maas", textBox5.Text);
+            }
+
+            sorgu += " ORDER BY NUMARA"; // Sıralama eklendi
+
+            komut.CommandText = sorgu;
+            komut.Connection = bag;
+
+            using (SqlDataAdapter adp = new SqlDataAdapter(komut))
+            {
+                DataTable tablo = new DataTable();
+                adp.Fill(tablo);
+                dataGridView1.DataSource = tablo;
+            }
+        }
+    }
+             catch (Exception hata)
+             {
+             if (bag.State == ConnectionState.Open) bag.Close();
+             MessageBox.Show(hata.Message);
+             }
+        }
+
+        private void sil_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                SqlCommand komut = new SqlCommand();
+                if (textBox1.Text != "")
+                {
+                    // Silme işlemi için SQL sorgusu
+                    string sorgu = "DELETE FROM KAYIT WHERE NUMARA = @num";
+
+                    // SqlCommand'u hazırla ve parametre ekle
+                    komut = new SqlCommand(sorgu, bag);
+                    komut.Parameters.AddWithValue("@num", textBox1.Text);
+
+                    // Bağlantıyı aç
+                    bag.Open();
+
+                    // Komutu çalıştır (kaydı sil)
+                    komut.ExecuteNonQuery();
+
+                    // Bağlantıyı kapat
+                    bag.Close();
+
+                    // Silme işlemi başarılı olduğunda mesaj göster
+                    MessageBox.Show("Kayıt silindi!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // DataGridView'ı güncelle
+                    ara_Click(sender, e);
+
+                    // Textbox'ları temizle ve odaklan
+                    textBox1.Clear();
+                    textBox2.Clear();
+                    textBox3.Clear();
+                    textBox4.Clear();
+                    textBox5.Clear();
+                    textBox1.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("Boş alan bırakmayınız!...");
+                }
+            }
+            catch (Exception hata)
+            {
+                // Hata durumunda mesaj göster
+                MessageBox.Show(hata.Message);
+            }
+        }
+
+        private void ekle_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox4.Text != "" && textBox5.Text != "")
+                {
+                    string sorgu = "INSERT INTO KAYIT (NUMARA, AD, SOYAD, ADRES, maaş) VALUES (@num, @ad, @soyad, @adres, @maaş)";
+                    using (SqlCommand komut = new SqlCommand(sorgu,bag))
+                    {
+                        komut.Parameters.AddWithValue("@num", textBox1.Text);
+                        komut.Parameters.AddWithValue("@ad", textBox2.Text);
+                        komut.Parameters.AddWithValue("@soyad", textBox3.Text);
+                        komut.Parameters.AddWithValue("@adres", textBox4.Text);
+                        komut.Parameters.AddWithValue("@maaş", textBox5.Text);
+                        // Bağlantıyı aç
+                        bag.Open();
+
+                        // Komutu çalıştır (kaydı ekle)
+                        komut.ExecuteNonQuery();
+
+                        // Bağlantıyı kapat
+                        bag.Close();
+
+                        // Ekleme işlemi başarılı olduğunda mesaj göster
+                        MessageBox.Show("Kayıt eklendi!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // DataGridView'ı güncelle
+                        ara_Click(sender, e);
+
+                        // Textbox'ları temizle ve odaklan
+                        textBox1.Clear();
+                        textBox2.Clear();
+                        textBox3.Clear();
+                        textBox4.Clear();
+                        textBox5.Clear();
+                        textBox1.Focus();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Tüm alanları doldurunuz!...", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception hata)
+            {
+                // Hata durumunda mesaj göster
+                MessageBox.Show(hata.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void tumunuSil_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Tüm verileri sıfırlama işlemi için SQL sorgusu
+                string sorgu = "TRUNCATE TABLE KAYIT";
+
+                using (SqlCommand komut = new SqlCommand(sorgu, bag))
+                {
+                    // Bağlantıyı aç
+                    bag.Open();
+
+                    // Komutu çalıştır (tüm verileri sil)
+                    komut.ExecuteNonQuery();
+
+                    // Bağlantıyı kapat
+                    bag.Close();
+
+                    // Mesaj göster
+                    MessageBox.Show("Tüm veriler sıfırlandı!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // DataGridView'ı güncelle
+                    tumunuGetir_Click(sender, e);
+                }
+            }
+            catch (Exception hata)
+            {
+                // Hata durumunda mesaj göster
+                MessageBox.Show(hata.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+    
+
+}

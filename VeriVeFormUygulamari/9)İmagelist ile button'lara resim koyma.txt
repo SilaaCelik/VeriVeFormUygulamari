@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace _1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+            //NOT: Her button için ayrı ayrı pictureBox1.Image kodlanır.
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = _1.Properties.Resources.kedii;
+            //NOT: _1. yazılımı namespace _1 e göre yazılır.
+            //NOT: Bu yazılımda resmin konumu ve ismi tanımlanır.
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = _1.Properties.Resources.panda;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = _1.Properties.Resources.ağaç;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = _1.Properties.Resources.köpekk;
+        }
+    }
+}

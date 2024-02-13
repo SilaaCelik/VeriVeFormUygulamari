@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace DERSLER
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            this.BackColor = Color.Lavender;
+            //NOT: Arka plan rengini değiştirir.
+        }
+
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            DateTime gun1, gun2;
+            gun1 = monthCalendar1.SelectionStart;
+            gun2 = monthCalendar1.SelectionEnd;
+            //NOT: gun1 ve gun2 başlangıç ve bitiş tanımlanır.
+
+            label1.Text = "İLK GÜN:" + gun1.ToShortDateString();
+            label2.Text = "SON GÜN:" + gun2.ToShortDateString();
+            //NOT: label1 ve label2 için string ten shorta dönüştürülür.
+
+            TimeSpan fark = gun2 - gun1;
+            //NOT: TimeSpan; gün sayısı, saat, dakika, saniye ve saniyenin kesirleri olarak ölçülen bir zaman aralığını temsil eder.
+
+            label3.Text = "GÜN SAYISI:" + (fark.Days+1);
+        }
+    }
+}

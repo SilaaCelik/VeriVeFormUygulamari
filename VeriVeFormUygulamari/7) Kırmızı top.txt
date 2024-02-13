@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace DERSLER
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            this.BackColor = Color.Lavender;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            numericUpDown1.Value = button1.Left;
+            //NOT: Burada button1'i (kırmızı top) numericupdown ile sol-sağ konumunu belirtir.
+            numericUpDown2.Value = button1.Top;
+            //NOT: Burada button1'i (kırmızı top) numericupdown ile yükseklik konumunu belirtir.
+
+
+            progressBar1.Value = button1.Left;
+            //NOT: progress bar'ın yatay şeklinde button1'in konumuna göre seviyesini yansıtır.
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            button1.Left = Convert.ToInt32(numericUpDown1.Value);
+            //NOT: numericUpDown1.Value yalın bir şekilde kabul etmediği için int e çevirdik.
+            progressBar1.Value = Convert.ToInt32(numericUpDown1.Value);
+            //NOT: progressBar1.Value = button1.Top olarakta yazılabilir. Üsteki gibi de yazılabilir.
+
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            button1.Top = Convert.ToInt32(numericUpDown2.Value);
+            progressBar1.Value = Convert.ToInt32(numericUpDown2.Value);
+            //NOT: progressBar1.Value = button1.Top olarakta yazılabilir. Üsteki gibi de yazılabilir.
+        }
+
+    }
+}

@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data; //1.adım
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.OleDb; //2.adım
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+namespace sila
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        OleDbConnection bag = new
+        OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;\r\n Data Source=Database1.accdb"); //3.adım
+        DataTable tablo = new DataTable();
+        private object dataGridView1;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        OleDbCommand komut = new OleDbCommand("SELECT * FROM sila", bag);
+        bag.Open(); //4.adım
+        OleDbDataReader oku = komut.ExecuteReader();
+
+            listBox1.Items.Clear();
+            //NOT:Button'a her tıklandığında tekrar tekrar yazdırmasın diye. 
+            string kayit = "";
+            while (oku.Read())
+            {
+                kayit = "";
+            //NOT:Button'a tıklanınca yanyana değil altalt'a yazdırmak için kullanılır.
+              for (int i = 0; i<4; i++)
+                {
+                    kayit += oku[i].ToString() + "\n";
+                    listBox1.Items.Add(kayit);
+                }
+            }
+            oku.Close(); 
+            bag.Close(); //5.adım
+        }
+    }
+}
